@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogos Caseiros</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #1a1a2e;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px 10px 20px; /* Ajuste no padding para o footer */
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            color: #e94560;
+            text-align: center;
+        }
+
+        .games-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 50px;
+        }
+
+        .game-btn {
+            background-color: #16213e;
+            color: #fff;
+            text-decoration: none;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            text-align: center;
+            font-weight: 600;
+            border: 2px solid #0f3460;
+            transition: all 0.3s ease;
+        }
+
+        .game-btn:hover {
+            background-color: #0f3460;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .donation-section {
+            background-color: #16213e;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid #e94560;
+            max-width: 350px;
+            width: 100%;
+        }
+
+        .donation-section h2 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background-color: #fff;
+            border-radius: 8px;
+            margin: 0 auto 20px auto;
+            object-fit: contain;
+            padding: 10px;
+            display: block;
+        }
+
+        .copy-btn {
+            background-color: #e94560;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        .copy-btn:hover {
+            background-color: #d13d56;
+        }
+
+        /* Notificação de copiado */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #4CAF50;
+            color: #fff;
+            text-align: center;
+            border-radius: 4px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            bottom: 30px;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s;
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px;
+        }
+
+        /* Assinatura discreta no rodapé */
+        footer {
+            margin-top: auto; /* Empurra o rodapé pro fundo da tela */
+            padding-top: 40px;
+            font-size: 0.75rem;
+            color: #ffffff;
+            opacity: 0.3; /* Deixa o texto bem discreto (transparente) */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Jogos Caseiros</h1>
+
+    <div class="games-container">
+        <a href="https://wgrmoreira.github.io/setas_metafofos/" class="game-btn" target="_blank">Jogo das Setas</a>
+        <a href="https://wgrmoreira.github.io/RPG-Pocket/" class="game-btn" target="_blank">RPG Pocket</a>
+        <a href="https://wgrmoreira.github.io/RPGPOCKET2/" class="game-btn" target="_blank">RPG Pocket 2</a>
+    </div>
+
+    <div class="donation-section">
+        <h2>Apoie meus projetos</h2>
+        
+        <!-- O QR Code será desenhado magicamente com o código completo que os bancos aceitam -->
+        <img id="qr-img" alt="QR Code para Doação PIX" class="qr-code">
+        
+        <button class="copy-btn" onclick="copiarPix()">Copiar PIX Copia e Cola</button>
+    </div>
+
+    <div id="toast">Código PIX copiado com sucesso!</div>
+
+    <footer>by wgrmoreira</footer>
+
+    <script>
+        // Este é o código "Copia e Cola" real e validado do seu CPF. 
+        // Ele contém os dados do Banco Central necessários para que qualquer aplicativo de banco consiga ler.
+        const pixPayloadValido = "00020126330014br.gov.bcb.pix0111044311047635204000053039865802BR5911WGR MOREIRA6006BRASIL62070503***63046C23"; 
+
+        // Gera a imagem do QR Code automaticamente usando o Payload oficial
+        document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixPayloadValido)}`;
+
+        function copiarPix() {
+            // Copia o código completo para a área de transferência do usuário
+            navigator.clipboard.writeText(pixPayloadValido).then(() => {
+                mostrarNotificacao();
+            }).catch(err => {
+                console.error('Erro ao copiar: ', err);
+                alert("Erro ao copiar a chave. Tente novamente.");
+            });
+        }
+
+        function mostrarNotificacao() {
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(function(){ 
+                toast.className = toast.className.replace("show", ""); 
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
