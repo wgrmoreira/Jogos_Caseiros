@@ -2,8 +2,16 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- Tags para permitir que a página funcione em Tela Cheia como um Web App -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1a1a2e">
+    
     <title>Jogos Caseiros</title>
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
@@ -21,7 +29,30 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding: 40px 20px 10px 20px; /* Ajuste no padding para o footer */
+            padding: 60px 20px 10px 20px; /* Mais espaço no topo para o botão fullscreen */
+            position: relative;
+        }
+
+        /* Botão de Tela Cheia */
+        .fullscreen-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #e94560;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        .fullscreen-btn:hover {
+            background-color: #d13d56;
         }
 
         h1 {
@@ -30,26 +61,38 @@
             text-align: center;
         }
 
+        /* Novo layout: Grade (Grid) para acomodar os 4 botões perfeitamente */
         .games-container {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 1fr; /* 1 coluna em telas muito pequenas */
             gap: 15px;
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
             margin-bottom: 50px;
+        }
+
+        /* Em telas um pouco maiores (acima de 400px), organiza em 2 colunas */
+        @media (min-width: 400px) {
+            .games-container {
+                grid-template-columns: 1fr 1fr;
+            }
         }
 
         .game-btn {
             background-color: #16213e;
             color: #fff;
             text-decoration: none;
-            padding: 15px 20px;
+            padding: 15px 10px;
             border-radius: 8px;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             text-align: center;
             font-weight: 600;
             border: 2px solid #0f3460;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60px;
         }
 
         .game-btn:hover {
@@ -102,7 +145,6 @@
             background-color: #d13d56;
         }
 
-        /* Notificação de copiado */
         #toast {
             visibility: hidden;
             min-width: 250px;
@@ -125,17 +167,19 @@
             bottom: 50px;
         }
 
-        /* Assinatura discreta no rodapé */
         footer {
-            margin-top: auto; /* Empurra o rodapé pro fundo da tela */
+            margin-top: auto;
             padding-top: 40px;
             font-size: 0.75rem;
             color: #ffffff;
-            opacity: 0.3; /* Deixa o texto bem discreto (transparente) */
+            opacity: 0.3;
         }
     </style>
 </head>
 <body>
+
+    <!-- Botão para forçar a tela cheia no navegador -->
+    <button class="fullscreen-btn" onclick="toggleFullScreen()">⛶ Tela Cheia</button>
 
     <h1>Jogos Caseiros</h1>
 
@@ -143,12 +187,13 @@
         <a href="https://wgrmoreira.github.io/setas_metafofos/" class="game-btn" target="_blank">Jogo das Setas</a>
         <a href="https://wgrmoreira.github.io/RPG-Pocket/" class="game-btn" target="_blank">RPG Pocket</a>
         <a href="https://wgrmoreira.github.io/RPGPOCKET2/" class="game-btn" target="_blank">RPG Pocket 2</a>
+        <!-- Novo Jogo Adicionado -->
+        <a href="https://wgrmoreira.github.io/XadrexMagnetico/" class="game-btn" target="_blank">Xadrez Magnético</a>
     </div>
 
     <div class="donation-section">
         <h2>Apoie meus projetos</h2>
         
-        <!-- O QR Code será desenhado magicamente com o código completo que os bancos aceitam -->
         <img id="qr-img" alt="QR Code para Doação PIX" class="qr-code">
         
         <button class="copy-btn" onclick="copiarPix()">Copiar PIX Copia e Cola</button>
@@ -159,15 +204,25 @@
     <footer>by wgrmoreira</footer>
 
     <script>
-        // Este é o código "Copia e Cola" real e validado do seu CPF. 
-        // Ele contém os dados do Banco Central necessários para que qualquer aplicativo de banco consiga ler.
+        // Função para ativar/desativar Tela Cheia
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch((err) => {
+                    console.log(`Erro ao tentar ativar tela cheia: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // Código do PIX
         const pixPayloadValido = "00020126330014br.gov.bcb.pix0111044311047635204000053039865802BR5911WGR MOREIRA6006BRASIL62070503***63046C23"; 
 
-        // Gera a imagem do QR Code automaticamente usando o Payload oficial
         document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixPayloadValido)}`;
 
         function copiarPix() {
-            // Copia o código completo para a área de transferência do usuário
             navigator.clipboard.writeText(pixPayloadValido).then(() => {
                 mostrarNotificacao();
             }).catch(err => {
