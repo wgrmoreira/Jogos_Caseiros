@@ -4,161 +4,163 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <!-- Tags para permitir que a página funcione em Tela Cheia como um Web App -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#1a1a2e">
+    <meta name="theme-color" content="#0d0d0f">
     
     <title>Jogos Caseiros</title>
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: #1a1a2e;
+            background-color: #0d0d0f; /* Fundo minimalista escuro */
             color: #ffffff;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding: 60px 20px 10px 20px; /* Mais espaço no topo para o botão fullscreen */
-            position: relative;
+            padding: 50px 20px 20px 20px;
+            overflow-x: hidden;
         }
 
-        /* Botão de Tela Cheia */
-        .fullscreen-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background-color: #e94560;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-            z-index: 10;
+        /* Telas */
+        .screen {
+            display: none; /* Escondidas por padrão */
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+            animation: fadeIn 0.4s ease-in-out;
         }
 
-        .fullscreen-btn:hover {
-            background-color: #d13d56;
+        .screen.active {
+            display: flex; /* Mostra apenas a tela ativa */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         h1 {
-            margin-bottom: 30px;
-            color: #e94560;
-            text-align: center;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+            font-size: 1.8rem;
+            color: #ececec;
         }
 
-        /* Novo layout: Grade (Grid) para acomodar os 4 botões perfeitamente */
+        h2 {
+            font-weight: 400;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: #b0b0b0;
+        }
+
+        /* Grade Minimalista para 5 jogos */
         .games-container {
             display: grid;
-            grid-template-columns: 1fr; /* 1 coluna em telas muito pequenas */
-            gap: 15px;
+            grid-template-columns: 1fr;
+            gap: 12px;
             width: 100%;
-            max-width: 500px;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
-        /* Em telas um pouco maiores (acima de 400px), organiza em 2 colunas */
         @media (min-width: 400px) {
             .games-container {
                 grid-template-columns: 1fr 1fr;
             }
+            /* Faz o último botão (Paredão) ocupar a linha inteira para centralizar */
+            .games-container a:last-child:nth-child(odd) {
+                grid-column: span 2;
+            }
         }
 
-        .game-btn {
-            background-color: #16213e;
-            color: #fff;
+        /* Estilo dos Botões - Minimalista */
+        .btn {
+            background-color: transparent;
+            color: #ececec;
             text-decoration: none;
-            padding: 15px 10px;
+            padding: 16px 10px;
             border-radius: 8px;
-            font-size: 1.05rem;
+            font-size: 1rem;
             text-align: center;
-            font-weight: 600;
-            border: 2px solid #0f3460;
+            font-weight: 400;
+            border: 1px solid #333;
             transition: all 0.3s ease;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 60px;
-        }
-
-        .game-btn:hover {
-            background-color: #0f3460;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
-        .donation-section {
-            background-color: #16213e;
-            padding: 30px;
-            border-radius: 12px;
-            text-align: center;
-            border: 2px solid #e94560;
-            max-width: 350px;
             width: 100%;
         }
 
-        .donation-section h2 {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: #fff;
+        .btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        .btn-donation-link {
+            border: 1px dashed #555;
+            color: #888;
+            font-size: 0.9rem;
+            padding: 12px;
+            max-width: 250px;
+        }
+
+        .btn-donation-link:hover {
+            border-style: solid;
+        }
+
+        .btn-back {
+            margin-top: 30px;
+            border-color: #555;
+            color: #888;
+        }
+
+        /* Seção do QR Code */
+        .qr-wrapper {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .qr-code {
             width: 200px;
             height: 200px;
-            background-color: #fff;
-            border-radius: 8px;
-            margin: 0 auto 20px auto;
-            object-fit: contain;
-            padding: 10px;
             display: block;
         }
 
-        .copy-btn {
-            background-color: #e94560;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-            width: 100%;
-        }
-
-        .copy-btn:hover {
-            background-color: #d13d56;
-        }
-
+        /* Notificação */
         #toast {
             visibility: hidden;
             min-width: 250px;
-            background-color: #4CAF50;
-            color: #fff;
+            background-color: #ffffff;
+            color: #000000;
             text-align: center;
-            border-radius: 4px;
-            padding: 16px;
+            border-radius: 30px;
+            padding: 12px 20px;
             position: fixed;
             z-index: 1;
             bottom: 30px;
+            font-size: 0.9rem;
             font-weight: 600;
             opacity: 0;
             transition: opacity 0.3s, bottom 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
         #toast.show {
@@ -167,70 +169,92 @@
             bottom: 50px;
         }
 
+        /* Assinatura */
         footer {
             margin-top: auto;
             padding-top: 40px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
             color: #ffffff;
-            opacity: 0.3;
+            opacity: 0.15; /* Bem discreto */
         }
     </style>
 </head>
 <body>
 
-    <!-- Botão para forçar a tela cheia no navegador -->
-    <button class="fullscreen-btn" onclick="toggleFullScreen()">⛶ Tela Cheia</button>
+    <!-- TELA 1: JOGOS -->
+    <div id="screen-home" class="screen active">
+        <h1>Jogos Caseiros</h1>
 
-    <h1>Jogos Caseiros</h1>
+        <div class="games-container">
+            <a href="https://wgrmoreira.github.io/setas_metafofos/" class="btn" target="_blank">Jogo das Setas</a>
+            <a href="https://wgrmoreira.github.io/RPG-Pocket/" class="btn" target="_blank">RPG Pocket</a>
+            <a href="https://wgrmoreira.github.io/RPGPOCKET2/" class="btn" target="_blank">RPG Pocket 2</a>
+            <a href="https://wgrmoreira.github.io/XadrezMagnetico/" class="btn" target="_blank">Xadrez Magnético</a>
+            <!-- Novo jogo adicionado -->
+            <a href="https://wgrmoreira.github.io/Paredao/" class="btn" target="_blank">Paredão</a>
+        </div>
 
-    <div class="games-container">
-        <a href="https://wgrmoreira.github.io/setas_metafofos/" class="game-btn" target="_blank">Jogo das Setas</a>
-        <a href="https://wgrmoreira.github.io/RPG-Pocket/" class="game-btn" target="_blank">RPG Pocket</a>
-        <a href="https://wgrmoreira.github.io/RPGPOCKET2/" class="game-btn" target="_blank">RPG Pocket 2</a>
-        <!-- Novo Jogo Adicionado -->
-        <a href="https://wgrmoreira.github.io/XadrezMagnetico/" class="game-btn" target="_blank">Xadrez Magnético</a>
+        <button class="btn btn-donation-link" onclick="switchScreen('screen-donation')">☕ Apoiar Projetos</button>
     </div>
 
-    <div class="donation-section">
+
+    <!-- TELA 2: DOAÇÃO -->
+    <div id="screen-donation" class="screen">
         <h2>Apoie meus projetos</h2>
         
-        <img id="qr-img" alt="QR Code para Doação PIX" class="qr-code">
+        <div class="qr-wrapper">
+            <img id="qr-img" alt="QR Code PIX" class="qr-code">
+        </div>
         
-        <button class="copy-btn" onclick="copiarPix()">Copiar PIX Copia e Cola</button>
+        <button class="btn" onclick="copiarPix()">Copiar Chave PIX</button>
+        <button class="btn btn-back" onclick="switchScreen('screen-home')">Voltar aos Jogos</button>
     </div>
 
-    <div id="toast">Código PIX copiado com sucesso!</div>
+    <!-- Mensagem flutuante -->
+    <div id="toast">Chave PIX copiada!</div>
 
-    <footer>by wgrmoreira</footer>
+    <!-- Assinatura discreta -->
+    <footer>wgrmoreira</footer>
 
     <script>
-        // Função para ativar/desativar Tela Cheia
-        function toggleFullScreen() {
+        // Função para ativar Tela Cheia no primeiro clique/toque do usuário na tela
+        function activateFullscreen() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch((err) => {
-                    console.log(`Erro ao tentar ativar tela cheia: ${err.message}`);
+                    console.log(`Fullscreen automático bloqueado ou indisponível: ${err.message}`);
                 });
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                }
             }
         }
+        // Ouve o primeiro clique na página inteira e aciona a tela cheia invisivelmente
+        document.body.addEventListener('click', activateFullscreen, { once: true });
+        document.body.addEventListener('touchstart', activateFullscreen, { once: true });
 
-        // Código do PIX
+        // Função para alternar entre as telas de Jogos e Doação
+        function switchScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // Configuração do PIX (Payload válido)
         const pixPayloadValido = "00020126330014br.gov.bcb.pix0111044311047635204000053039865802BR5911WGR MOREIRA6006BRASIL62070503***63046C23"; 
 
+        // Gera o QR Code
         document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixPayloadValido)}`;
 
+        // Função de copiar PIX
         function copiarPix() {
             navigator.clipboard.writeText(pixPayloadValido).then(() => {
                 mostrarNotificacao();
             }).catch(err => {
                 console.error('Erro ao copiar: ', err);
-                alert("Erro ao copiar a chave. Tente novamente.");
+                alert("Erro ao copiar a chave PIX.");
             });
         }
 
+        // Animação de notificação (Toast)
         function mostrarNotificacao() {
             const toast = document.getElementById("toast");
             toast.className = "show";
