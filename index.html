@@ -23,7 +23,7 @@
         }
 
         body {
-            background-color: #0d0d0f; /* Fundo minimalista escuro */
+            background-color: #0d0d0f;
             color: #ffffff;
             display: flex;
             flex-direction: column;
@@ -35,7 +35,7 @@
 
         /* Telas */
         .screen {
-            display: none; /* Escondidas por padrão */
+            display: none;
             flex-direction: column;
             align-items: center;
             width: 100%;
@@ -44,7 +44,7 @@
         }
 
         .screen.active {
-            display: flex; /* Mostra apenas a tela ativa */
+            display: flex;
         }
 
         @keyframes fadeIn {
@@ -58,6 +58,7 @@
             margin-bottom: 40px;
             font-size: 1.8rem;
             color: #ececec;
+            text-align: center;
         }
 
         h2 {
@@ -67,10 +68,10 @@
             color: #b0b0b0;
         }
 
-        /* Grade Minimalista para 5 jogos */
+        /* Grade Minimalista para 6 jogos */
         .games-container {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr; /* 1 coluna no celular */
             gap: 12px;
             width: 100%;
             margin-bottom: 40px;
@@ -78,9 +79,9 @@
 
         @media (min-width: 400px) {
             .games-container {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr 1fr; /* 2 colunas simétricas em telas maiores */
             }
-            /* Faz o último botão (Paredão) ocupar a linha inteira para centralizar */
+            /* Regra de segurança caso você adicione um 7º jogo no futuro: ele centraliza sozinho */
             .games-container a:last-child:nth-child(odd) {
                 grid-column: span 2;
             }
@@ -176,7 +177,7 @@
             font-size: 0.7rem;
             letter-spacing: 1px;
             color: #ffffff;
-            opacity: 0.15; /* Bem discreto */
+            opacity: 0.15;
         }
     </style>
 </head>
@@ -191,8 +192,9 @@
             <a href="https://wgrmoreira.github.io/RPG-Pocket/" class="btn" target="_blank">RPG Pocket</a>
             <a href="https://wgrmoreira.github.io/RPGPOCKET2/" class="btn" target="_blank">RPG Pocket 2</a>
             <a href="https://wgrmoreira.github.io/XadrezMagnetico/" class="btn" target="_blank">Xadrez Magnético</a>
-            <!-- Novo jogo adicionado -->
             <a href="https://wgrmoreira.github.io/Paredao/" class="btn" target="_blank">Paredão</a>
+            <!-- Novo jogo adicionado -->
+            <a href="https://wgrmoreira.github.io/graoturismo/" class="btn" target="_blank">Grão Turismo</a>
         </div>
 
         <button class="btn btn-donation-link" onclick="switchScreen('screen-donation')">☕ Apoiar Projetos</button>
@@ -218,19 +220,18 @@
     <footer>wgrmoreira</footer>
 
     <script>
-        // Função para ativar Tela Cheia no primeiro clique/toque do usuário na tela
+        // Função para ativar Tela Cheia silenciosamente no primeiro clique
         function activateFullscreen() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch((err) => {
-                    console.log(`Fullscreen automático bloqueado ou indisponível: ${err.message}`);
+                    console.log(`Fullscreen automático indisponível: ${err.message}`);
                 });
             }
         }
-        // Ouve o primeiro clique na página inteira e aciona a tela cheia invisivelmente
         document.body.addEventListener('click', activateFullscreen, { once: true });
         document.body.addEventListener('touchstart', activateFullscreen, { once: true });
 
-        // Função para alternar entre as telas de Jogos e Doação
+        // Função para alternar as telas (Jogos <-> Doação)
         function switchScreen(screenId) {
             document.querySelectorAll('.screen').forEach(screen => {
                 screen.classList.remove('active');
@@ -238,13 +239,13 @@
             document.getElementById(screenId).classList.add('active');
         }
 
-        // Configuração do PIX (Payload válido)
+        // Configuração do PIX gerada baseada no seu CPF (Padrão Banco Central)
         const pixPayloadValido = "00020126330014br.gov.bcb.pix0111044311047635204000053039865802BR5911WGR MOREIRA6006BRASIL62070503***63046C23"; 
 
-        // Gera o QR Code
+        // Gera o QR Code dinamicamente
         document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixPayloadValido)}`;
 
-        // Função de copiar PIX
+        // Copiar PIX
         function copiarPix() {
             navigator.clipboard.writeText(pixPayloadValido).then(() => {
                 mostrarNotificacao();
@@ -254,7 +255,7 @@
             });
         }
 
-        // Animação de notificação (Toast)
+        // Animação de notificação
         function mostrarNotificacao() {
             const toast = document.getElementById("toast");
             toast.className = "show";
