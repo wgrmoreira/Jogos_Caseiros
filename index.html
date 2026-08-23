@@ -68,31 +68,22 @@
             color: #b0b0b0;
         }
 
-        /* Grade Minimalista para 6 jogos */
+        /* Layout Flexível para os botões se ajustarem sozinhos */
         .games-container {
-            display: grid;
-            grid-template-columns: 1fr; /* 1 coluna no celular */
+            display: flex;
+            flex-wrap: wrap;
             gap: 12px;
+            justify-content: center;
             width: 100%;
             margin-bottom: 40px;
         }
 
-        @media (min-width: 400px) {
-            .games-container {
-                grid-template-columns: 1fr 1fr; /* 2 colunas simétricas em telas maiores */
-            }
-            /* Regra de segurança caso você adicione um 7º jogo no futuro: ele centraliza sozinho */
-            .games-container a:last-child:nth-child(odd) {
-                grid-column: span 2;
-            }
-        }
-
-        /* Estilo dos Botões - Minimalista */
+        /* Estilo dos Botões - Minimalista e Flexível */
         .btn {
             background-color: transparent;
             color: #ececec;
             text-decoration: none;
-            padding: 16px 10px;
+            padding: 16px 20px;
             border-radius: 8px;
             font-size: 1rem;
             text-align: center;
@@ -103,7 +94,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 100%;
+            flex-grow: 1; /* Faz o botão esticar para preencher os espaços vazios */
+            min-width: 130px; /* Evita que fiquem espremidos demais */
         }
 
         .btn:hover {
@@ -118,6 +110,7 @@
             font-size: 0.9rem;
             padding: 12px;
             max-width: 250px;
+            flex-grow: 0; /* O botão de doação não precisa esticar */
         }
 
         .btn-donation-link:hover {
@@ -128,6 +121,8 @@
             margin-top: 30px;
             border-color: #555;
             color: #888;
+            flex-grow: 0;
+            width: 100%;
         }
 
         /* Seção do QR Code */
@@ -193,8 +188,9 @@
             <a href="https://wgrmoreira.github.io/RPGPOCKET2/" class="btn" target="_blank">RPG Pocket 2</a>
             <a href="https://wgrmoreira.github.io/XadrezMagnetico/" class="btn" target="_blank">Xadrez Magnético</a>
             <a href="https://wgrmoreira.github.io/Paredao/" class="btn" target="_blank">Paredão</a>
-            <!-- Novo jogo adicionado -->
             <a href="https://wgrmoreira.github.io/graoturismo/" class="btn" target="_blank">Grão Turismo</a>
+            <!-- Sétimo jogo adicionado -->
+            <a href="https://wgrmoreira.github.io/Pilhas/" class="btn" target="_blank">Pilhas!</a>
         </div>
 
         <button class="btn btn-donation-link" onclick="switchScreen('screen-donation')">☕ Apoiar Projetos</button>
