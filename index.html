@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
+    <!-- Link para o Manifest (Necessário para instalação PWA) -->
+    <link rel="manifest" href="manifest.json">
+    
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Jogos Caseiros">
     <meta name="theme-color" content="#171a21">
     
     <title>Jogos Caseiros</title>
@@ -33,7 +37,6 @@
             background-image: radial-gradient(circle at 50% 0%, #2a475e 0%, #171a21 60%);
         }
 
-        /* Container Principal */
         .app-container {
             width: 100%;
             max-width: 900px;
@@ -43,7 +46,6 @@
             flex-grow: 1;
         }
 
-        /* Estilo do Logo Centralizado Acima de Tudo */
         .site-logo {
             height: 120px;
             width: auto;
@@ -53,7 +55,6 @@
             margin: 0 auto 30px auto;
         }
 
-        /* Telas (Transições suaves) */
         .screen {
             display: none;
             flex-direction: column;
@@ -69,10 +70,9 @@
             transform: translateY(0);
         }
 
-        /* Cabeçalho estilo Steam (Agora apenas com o botão à direita) */
         header {
             display: flex;
-            justify-content: flex-end; /* Alinha o conteúdo à direita */
+            justify-content: flex-end; 
             align-items: center; 
             border-bottom: 2px solid #2a475e;
             padding-bottom: 15px;
@@ -81,21 +81,21 @@
             gap: 15px;
         }
 
-        /* Agrupa os itens do lado direito do header */
         .header-actions {
             display: flex;
             align-items: center;
             gap: 15px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
         }
 
-        /* Efeito de pulso para chamar atenção ao botão de apoiar */
         @keyframes pulseGlow {
             0% { box-shadow: 0 0 0 0 rgba(102, 192, 244, 0.4); }
             70% { box-shadow: 0 0 0 8px rgba(102, 192, 244, 0); }
             100% { box-shadow: 0 0 0 0 rgba(102, 192, 244, 0); }
         }
 
-        .wallet-btn {
+        .action-btn {
             background: rgba(102, 192, 244, 0.15);
             color: #66c0f4;
             border: 1px solid #66c0f4;
@@ -108,23 +108,36 @@
             display: flex;
             align-items: center;
             gap: 8px;
+        }
+
+        .action-btn.highlight {
             animation: pulseGlow 2.5s infinite;
         }
 
-        .wallet-btn:hover {
+        .action-btn:hover {
             background: #66c0f4;
             color: #171a21;
             animation: none; 
         }
 
-        /* Grade de Jogos Responsiva */
+        /* Botão de instalar (Escondido até que o celular permita) */
+        #install-btn {
+            display: none;
+            background: #2a475e;
+            color: #ffffff;
+            border: 1px solid #66c0f4;
+        }
+        #install-btn:hover {
+            background: #66c0f4;
+            color: #171a21;
+        }
+
         .library-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 20px;
         }
 
-        /* Cartões de Jogo */
         .game-card {
             background-color: rgba(32, 45, 57, 0.7);
             border-radius: 6px;
@@ -146,7 +159,6 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.4);
         }
 
-        /* Efeito de brilho no hover */
         .game-card::after {
             content: '';
             position: absolute;
@@ -159,7 +171,6 @@
             right: 150%;
         }
 
-        /* Ícones minimalistas (SVGs) */
         .icon-box {
             width: 45px;
             height: 45px;
@@ -189,7 +200,6 @@
             fill: none;
         }
 
-        /* Textos do Cartão */
         .game-info {
             display: flex;
             flex-direction: column;
@@ -215,7 +225,6 @@
             color: #66c0f4;
         }
 
-        /* Tela de Doação */
         .donation-box {
             background: rgba(32, 45, 57, 0.8);
             border-radius: 8px;
@@ -267,7 +276,6 @@
             background-position: 100%;
         }
 
-        /* Estilo Notificação Toast */
         #toast {
             visibility: hidden;
             min-width: 280px;
@@ -295,7 +303,28 @@
             bottom: 20px;
         }
 
-        /* Assinatura */
+        /* Modal para usuários de iPhone */
+        #ios-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .ios-box {
+            background: #171a21;
+            border: 2px solid #66c0f4;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            max-width: 300px;
+        }
+        .ios-box p { margin-bottom: 15px; font-size: 0.95rem; }
+        .ios-box svg { color: #66c0f4; margin: 10px 0; }
+
         footer {
             margin-top: auto;
             text-align: center;
@@ -310,13 +339,17 @@
 
     <div class="app-container">
         
-        <!-- LOGO CENTRALIZADO ACIMA DE TUDO -->
         <img src="assets/img/logo.png" alt="Logo" class="site-logo">
         
-        <!-- CABEÇALHO -->
         <header>
             <div class="header-actions">
-                <button class="wallet-btn" onclick="switchScreen('screen-donation')">
+                <!-- Botão de Instalar App (PWA) -->
+                <button id="install-btn" class="action-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Instalar App
+                </button>
+
+                <button class="action-btn highlight" onclick="switchScreen('screen-donation')">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
                     Apoiar Projetos
                 </button>
@@ -327,73 +360,36 @@
         <main id="screen-home" class="screen active">
             <div class="library-grid">
                 
-                <!-- Setas -->
                 <a href="https://wgrmoreira.github.io/setas_metafofos/" class="game-card" target="_blank">
-                    <div class="icon-box">
-                        <svg viewBox="0 0 24 24"><path d="M5 9l-3 3 3 3M9 5l3-3 3 3M19 9l3 3-3 3M9 19l3 3 3-3M2 12h20M12 2v20"/></svg>
-                    </div>
-                    <div class="game-info">
-                        <span class="game-title">Setas</span>
-                        <span class="game-status">▶ Iniciar Jogo</span>
-                    </div>
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M5 9l-3 3 3 3M9 5l3-3 3 3M19 9l3 3-3 3M9 19l3 3-3-3M2 12h20M12 2v20"/></svg></div>
+                    <div class="game-info"><span class="game-title">Setas</span><span class="game-status">▶ Iniciar Jogo</span></div>
                 </a>
 
-                <!-- RPG Battles -->
                 <a href="https://wgrmoreira.github.io/BattlesRPG/" class="game-card" target="_blank">
-                    <div class="icon-box">
-                        <svg viewBox="0 0 24 24"><path d="M14.5 17.5L3 6V3h3l11.5 11.5M13 19l6-6 2 2-6 6-2-2z"/></svg>
-                    </div>
-                    <div class="game-info">
-                        <span class="game-title">RPG Battles</span>
-                        <span class="game-status">▶ Iniciar Jogo</span>
-                    </div>
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M14.5 17.5L3 6V3h3l11.5 11.5M13 19l6-6 2 2-6 6-2-2z"/></svg></div>
+                    <div class="game-info"><span class="game-title">RPG Battles</span><span class="game-status">▶ Iniciar Jogo</span></div>
                 </a>
 
-                <!-- Xadrez Magnético -->
                 <a href="https://wgrmoreira.github.io/XadrezMagnetico/" class="game-card" target="_blank">
-                    <div class="icon-box">
-                        <svg viewBox="0 0 24 24"><path d="M4 10V6a8 8 0 0 1 16 0v4M4 10h4v8H4zM16 10h4v8h-4z"/></svg>
-                    </div>
-                    <div class="game-info">
-                        <span class="game-title">Xadrez Magnético</span>
-                        <span class="game-status">▶ Iniciar Jogo</span>
-                    </div>
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M4 10V6a8 8 0 0 1 16 0v4M4 10h4v8H4zM16 10h4v8h-4z"/></svg></div>
+                    <div class="game-info"><span class="game-title">Xadrez Magnético</span><span class="game-status">▶ Iniciar Jogo</span></div>
                 </a>
 
-                <!-- Paredão -->
                 <a href="https://wgrmoreira.github.io/Paredao/" class="game-card" target="_blank">
-                    <div class="icon-box">
-                        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-                    </div>
-                    <div class="game-info">
-                        <span class="game-title">Paredão</span>
-                        <span class="game-status">▶ Iniciar Jogo</span>
-                    </div>
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
+                    <div class="game-info"><span class="game-title">Paredão</span><span class="game-status">▶ Iniciar Jogo</span></div>
                 </a>
 
-                <!-- Grão Turismo -->
                 <a href="https://wgrmoreira.github.io/graoturismo/" class="game-card" target="_blank">
-                    <div class="icon-box">
-                        <svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg>
-                    </div>
-                    <div class="game-info">
-                        <span class="game-title">Grão Turismo</span>
-                        <span class="game-status">▶ Iniciar Jogo</span>
-                    </div>
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg></div>
+                    <div class="game-info"><span class="game-title">Grão Turismo</span><span class="game-status">▶ Iniciar Jogo</span></div>
                 </a>
 
-                <!-- Pilhas! -->
                 <a href="https://wgrmoreira.github.io/Pilhas/" class="game-card" target="_blank">
-                    <div class="icon-box">
-                        <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 12 12 17 22 12"/><polyline points="2 17 12 22 22 17"/></svg>
-                    </div>
-                    <div class="game-info">
-                        <span class="game-title">Pilhas!</span>
-                        <span class="game-status">▶ Iniciar Jogo</span>
-                    </div>
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 12 12 17 22 12"/><polyline points="2 17 12 22 22 17"/></svg></div>
+                    <div class="game-info"><span class="game-title">Pilhas!</span><span class="game-status">▶ Iniciar Jogo</span></div>
                 </a>
 
-                <!-- International Superstar Pelada 2026 Deluxe -->
                 <a href="https://wgrmoreira.github.io/Pelada26/" class="game-card" target="_blank">
                     <div class="icon-box">
                         <svg viewBox="0 0 24 24">
@@ -406,10 +402,18 @@
                             <line x1="2.5" y1="8.5" x2="8" y2="10"/>
                         </svg>
                     </div>
-                    <div class="game-info">
-                        <span class="game-title">International Superstar Pelada 2026 Deluxe</span>
-                        <span class="game-status">▶ Iniciar Jogo</span>
+                    <div class="game-info"><span class="game-title">International Superstar Pelada 2026 Deluxe</span><span class="game-status">▶ Iniciar Jogo</span></div>
+                </a>
+
+                <!-- Novo Jogo: Lados! -->
+                <a href="https://wgrmoreira.github.io/lados/" class="game-card" target="_blank">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="12" y1="3" x2="12" y2="21"/>
+                        </svg>
                     </div>
+                    <div class="game-info"><span class="game-title">Lados!</span><span class="game-status">▶ Iniciar Jogo</span></div>
                 </a>
 
             </div>
@@ -417,7 +421,7 @@
 
         <!-- TELA 2: DOAÇÃO -->
         <main id="screen-donation" class="screen">
-            <button class="wallet-btn" style="width: fit-content; margin-bottom: 20px; animation: none;" onclick="switchScreen('screen-home')">
+            <button class="action-btn" style="width: fit-content; margin-bottom: 20px; animation: none;" onclick="switchScreen('screen-home')">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                 Voltar aos Jogos
             </button>
@@ -437,14 +441,65 @@
         <footer>Dev Wagner Moreira</footer>
     </div>
 
-    <!-- Mensagem flutuante -->
+    <!-- Modais e Avisos -->
     <div id="toast">
         <svg width="20" height="20" style="margin-right: 10px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
         Código PIX copiado!
     </div>
 
+    <div id="ios-modal">
+        <div class="ios-box">
+            <h3 style="margin-bottom:10px; color:#ffffff;">Instalar no iPhone</h3>
+            <p>Para instalar o app, toque no ícone de Compartilhar abaixo:</p>
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            <p>E depois selecione:<br><strong>"Adicionar à Tela de Início"</strong></p>
+            <button class="btn-primary" onclick="document.getElementById('ios-modal').style.display='none'">Entendi</button>
+        </div>
+    </div>
+
     <script>
-        // Fullscreen suave no primeiro clique
+        // Registrar Service Worker para PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch((error) => console.log('Service Worker falhou', error));
+        }
+
+        // Lógica de Instalação (PWA)
+        let deferredPrompt;
+        const installBtn = document.getElementById('install-btn');
+
+        // Verifica se é iOS e se já não está instalado
+        const isIos = () => {
+            const userAgent = window.navigator.userAgent.toLowerCase();
+            return /iphone|ipad|ipod/.test(userAgent);
+        }
+        const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+
+        if (isIos() && !isInStandaloneMode()) {
+            installBtn.style.display = 'flex'; // Mostra botão no iOS
+            installBtn.addEventListener('click', () => {
+                document.getElementById('ios-modal').style.display = 'flex'; // Abre tutorial do iPhone
+            });
+        }
+
+        // Detecta Android/Chrome e libera o prompt nativo
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault(); 
+            deferredPrompt = e; 
+            installBtn.style.display = 'flex'; 
+        });
+
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    installBtn.style.display = 'none'; 
+                }
+                deferredPrompt = null;
+            }
+        });
+
+        // Lógica de Tela Cheia automática nos jogos
         function activateFullscreen() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(() => {});
@@ -453,20 +508,16 @@
         document.body.addEventListener('click', activateFullscreen, { once: true });
         document.body.addEventListener('touchstart', activateFullscreen, { once: true });
 
-        // Navegação suave entre telas
+        // Troca de Telas
         function switchScreen(screenId) {
             const screens = document.querySelectorAll('.screen');
-            
             screens.forEach(screen => {
                 if(screen.classList.contains('active')) {
                     screen.style.opacity = '0';
                     screen.style.transform = 'translateY(15px)';
-                    setTimeout(() => {
-                        screen.classList.remove('active');
-                    }, 300);
+                    setTimeout(() => screen.classList.remove('active'), 300);
                 }
             });
-
             setTimeout(() => {
                 const newScreen = document.getElementById(screenId);
                 newScreen.classList.add('active');
@@ -477,26 +528,16 @@
             }, 300);
         }
 
-        // Configuração PIX
+        // PIX
         const pixPayloadValido = "00020126330014br.gov.bcb.pix0111044311047635204000053039865802BR5911WGR MOREIRA6006BRASIL62070503***63046C23"; 
         document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixPayloadValido)}`;
 
-        // Copiar PIX
         function copiarPix() {
             navigator.clipboard.writeText(pixPayloadValido).then(() => {
-                mostrarNotificacao();
-            }).catch(err => {
-                console.error('Erro ao copiar: ', err);
-            });
-        }
-
-        // Animação Toast
-        function mostrarNotificacao() {
-            const toast = document.getElementById("toast");
-            toast.className = "show";
-            setTimeout(function(){ 
-                toast.className = toast.className.replace("show", ""); 
-            }, 3500);
+                const toast = document.getElementById("toast");
+                toast.className = "show";
+                setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3500);
+            }).catch(err => console.error('Erro ao copiar: ', err));
         }
     </script>
 </body>
