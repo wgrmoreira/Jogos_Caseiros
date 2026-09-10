@@ -120,7 +120,6 @@
             animation: none; 
         }
 
-        /* Botão de instalar (Escondido até que o celular permita) */
         #install-btn {
             display: none;
             background: #2a475e;
@@ -303,7 +302,6 @@
             bottom: 20px;
         }
 
-        /* Modal para usuários de iPhone */
         #ios-modal {
             display: none;
             position: fixed;
@@ -343,7 +341,6 @@
         
         <header>
             <div class="header-actions">
-                <!-- Botão de Instalar App (PWA) -->
                 <button id="install-btn" class="action-btn">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                     Instalar App
@@ -356,40 +353,49 @@
             </div>
         </header>
 
-        <!-- TELA 1: JOGOS -->
+        <!-- TELA 1: JOGOS (ORDENADOS DO MAIS NOVO AO MAIS VELHO) -->
         <main id="screen-home" class="screen active">
             <div class="library-grid">
+
+                <!-- NOVO: Combate! -->
+                <a href="https://wgrmoreira.github.io/Combate/" class="game-card" target="_blank">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="2" x2="12" y2="22"/>
+                            <line x1="2" y1="12" x2="22" y2="12"/>
+                            <circle cx="12" cy="12" r="4"/>
+                        </svg>
+                    </div>
+                    <div class="game-info"><span class="game-title">Combate!</span><span class="game-status">▶ Iniciar Jogo</span></div>
+                </a>
+
+                <!-- NOVO: Equilíbrio! -->
+                <a href="https://wgrmoreira.github.io/Equilibrar/" class="game-card" target="_blank">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 3v15"/>
+                            <path d="M3 12h18"/>
+                            <path d="M12 18l-4 4h8z"/>
+                            <circle cx="5" cy="9" r="3"/>
+                            <circle cx="19" cy="9" r="3"/>
+                        </svg>
+                    </div>
+                    <div class="game-info"><span class="game-title">Equilíbrio!</span><span class="game-status">▶ Iniciar Jogo</span></div>
+                </a>
                 
-                <a href="https://wgrmoreira.github.io/setas_metafofos/" class="game-card" target="_blank">
-                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M5 9l-3 3 3 3M9 5l3-3 3 3M19 9l3 3-3 3M9 19l3 3-3-3M2 12h20M12 2v20"/></svg></div>
-                    <div class="game-info"><span class="game-title">Setas</span><span class="game-status">▶ Iniciar Jogo</span></div>
+                <!-- Lados! -->
+                <a href="https://wgrmoreira.github.io/lados/" class="game-card" target="_blank">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="12" y1="3" x2="12" y2="21"/>
+                        </svg>
+                    </div>
+                    <div class="game-info"><span class="game-title">Lados!</span><span class="game-status">▶ Iniciar Jogo</span></div>
                 </a>
 
-                <a href="https://wgrmoreira.github.io/BattlesRPG/" class="game-card" target="_blank">
-                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M14.5 17.5L3 6V3h3l11.5 11.5M13 19l6-6 2 2-6 6-2-2z"/></svg></div>
-                    <div class="game-info"><span class="game-title">RPG Battles</span><span class="game-status">▶ Iniciar Jogo</span></div>
-                </a>
-
-                <a href="https://wgrmoreira.github.io/XadrezMagnetico/" class="game-card" target="_blank">
-                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M4 10V6a8 8 0 0 1 16 0v4M4 10h4v8H4zM16 10h4v8h-4z"/></svg></div>
-                    <div class="game-info"><span class="game-title">Xadrez Magnético</span><span class="game-status">▶ Iniciar Jogo</span></div>
-                </a>
-
-                <a href="https://wgrmoreira.github.io/Paredao/" class="game-card" target="_blank">
-                    <div class="icon-box"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
-                    <div class="game-info"><span class="game-title">Paredão</span><span class="game-status">▶ Iniciar Jogo</span></div>
-                </a>
-
-                <a href="https://wgrmoreira.github.io/graoturismo/" class="game-card" target="_blank">
-                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg></div>
-                    <div class="game-info"><span class="game-title">Grão Turismo</span><span class="game-status">▶ Iniciar Jogo</span></div>
-                </a>
-
-                <a href="https://wgrmoreira.github.io/Pilhas/" class="game-card" target="_blank">
-                    <div class="icon-box"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 12 12 17 22 12"/><polyline points="2 17 12 22 22 17"/></svg></div>
-                    <div class="game-info"><span class="game-title">Pilhas!</span><span class="game-status">▶ Iniciar Jogo</span></div>
-                </a>
-
+                <!-- International Superstar Pelada 2026 Deluxe -->
                 <a href="https://wgrmoreira.github.io/Pelada26/" class="game-card" target="_blank">
                     <div class="icon-box">
                         <svg viewBox="0 0 24 24">
@@ -405,15 +411,40 @@
                     <div class="game-info"><span class="game-title">International Superstar Pelada 2026 Deluxe</span><span class="game-status">▶ Iniciar Jogo</span></div>
                 </a>
 
-                <!-- Novo Jogo: Lados! -->
-                <a href="https://wgrmoreira.github.io/lados/" class="game-card" target="_blank">
-                    <div class="icon-box">
-                        <svg viewBox="0 0 24 24">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                            <line x1="12" y1="3" x2="12" y2="21"/>
-                        </svg>
-                    </div>
-                    <div class="game-info"><span class="game-title">Lados!</span><span class="game-status">▶ Iniciar Jogo</span></div>
+                <!-- Pilhas! -->
+                <a href="https://wgrmoreira.github.io/Pilhas/" class="game-card" target="_blank">
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 12 12 17 22 12"/><polyline points="2 17 12 22 22 17"/></svg></div>
+                    <div class="game-info"><span class="game-title">Pilhas!</span><span class="game-status">▶ Iniciar Jogo</span></div>
+                </a>
+
+                <!-- Grão Turismo -->
+                <a href="https://wgrmoreira.github.io/graoturismo/" class="game-card" target="_blank">
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg></div>
+                    <div class="game-info"><span class="game-title">Grão Turismo</span><span class="game-status">▶ Iniciar Jogo</span></div>
+                </a>
+
+                <!-- Paredão -->
+                <a href="https://wgrmoreira.github.io/Paredao/" class="game-card" target="_blank">
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
+                    <div class="game-info"><span class="game-title">Paredão</span><span class="game-status">▶ Iniciar Jogo</span></div>
+                </a>
+
+                <!-- Xadrez Magnético -->
+                <a href="https://wgrmoreira.github.io/XadrezMagnetico/" class="game-card" target="_blank">
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M4 10V6a8 8 0 0 1 16 0v4M4 10h4v8H4zM16 10h4v8h-4z"/></svg></div>
+                    <div class="game-info"><span class="game-title">Xadrez Magnético</span><span class="game-status">▶ Iniciar Jogo</span></div>
+                </a>
+
+                <!-- RPG Battles -->
+                <a href="https://wgrmoreira.github.io/BattlesRPG/" class="game-card" target="_blank">
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M14.5 17.5L3 6V3h3l11.5 11.5M13 19l6-6 2 2-6 6-2-2z"/></svg></div>
+                    <div class="game-info"><span class="game-title">RPG Battles</span><span class="game-status">▶ Iniciar Jogo</span></div>
+                </a>
+
+                <!-- Setas -->
+                <a href="https://wgrmoreira.github.io/setas_metafofos/" class="game-card" target="_blank">
+                    <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M5 9l-3 3 3 3M9 5l3-3 3 3M19 9l3 3-3 3M9 19l3 3 3-3M2 12h20M12 2v20"/></svg></div>
+                    <div class="game-info"><span class="game-title">Setas</span><span class="game-status">▶ Iniciar Jogo</span></div>
                 </a>
 
             </div>
