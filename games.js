@@ -1,5 +1,12 @@
 const games = [
   {
+    "name": "Cores!",
+    "category": "Puzzle",
+    "url": "https://wgrmoreira.github.io/Cores/",
+    "cover": "assets/covers/11.svg",
+    "color": "#f89cca"
+  },
+  {
     "name": "Grande Azul",
     "category": "Ação",
     "url": "https://wgrmoreira.github.io/Grande_Azul/",

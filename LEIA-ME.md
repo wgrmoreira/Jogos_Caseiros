@@ -8,7 +8,7 @@ Não precisa instalar dependências ou compilar. Para uma conferência rápida, 
 
 ## O que está incluído
 
-- Onze jogos com os mesmos endereços do portal original, abrindo em outra aba.
+- Doze jogos com os mesmos endereços do portal original, abrindo em outra aba.
 - Capas SVG originais, editáveis e locais, sem fontes ou bibliotecas externas.
 - Filtros por categoria, busca sem distinção de acentos, ordenação e estado sem resultados.
 - Tela de apoio, cópia de PIX, alternativa de cópia manual e instruções de instalação para iPhone.
@@ -27,8 +27,10 @@ Edite nomes, categorias e links em `games.js`; capas ficam em `assets/covers`. A
 
 O arquivo HUB.zip continha `index.html` e `assets/img/logo.png`. Todo o CSS e JavaScript estavam embutidos no HTML. Havia duas telas (catálogo e apoio), aviso de PIX copiado, modal de instalação no iPhone e solicitação automática de tela cheia no primeiro clique. O HTML referenciava `manifest.json` e `sw.js`, ausentes no ZIP. Esses arquivos foram implementados nesta versão. A navegação usa âncoras para permitir voltar pelo navegador. A tela cheia automática foi removida para manter a navegação previsível e acessível.
 
-Categorias: Ação (2), Puzzle (6), RPG (1), Esporte (2). O título de Pelada foi ajustado para “International Superstars Pelada 2026 Deluxe”, conforme solicitado, preservando o destino original.
+Categorias: Ação (2), Puzzle (7), RPG (1), Esporte (2). O título de Pelada foi ajustado para “International Superstars Pelada 2026 Deluxe”, conforme solicitado, preservando o destino original.
 
 ## Celulares
 
 Abra o endereço do GitHub Pages no Safari (iPhone) ou Chrome (Android). O portal adapta o cabeçalho, a busca, os filtros e as capas à largura da tela, com uma coluna em telas de até 400 px e controles maiores para toque. Não exige instalação. Grande Azul foi adicionado à categoria Ação, com capa original e seu link informado. A compatibilidade de cada jogo externo depende do próprio jogo.
+
+Atualização v4: Cores! incluído em Puzzle, com capa vetorial original de padrões de cores em um tabuleiro. Total: 12 jogos, sendo 7 puzzles.
