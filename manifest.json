@@ -1,0 +1,17 @@
+{
+  "name": "Jogos Caseiros",
+  "short_name": "Jogos Caseiros",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b111b",
+  "theme_color": "#0b111b",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+const pixPayloadValido = "00020126330014br.gov.bcb.pix0111044311047635204000053039865802BR5911WGR MOREIRA6006BRASIL62070503***63046C23";
+document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixPayloadValido)}`;
