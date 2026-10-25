@@ -1,5 +1,12 @@
 const games = [
   {
+    "name": "Energia",
+    "category": "Puzzle",
+    "url": "https://wgrmoreira.github.io/Energia/",
+    "cover": "assets/covers/12.svg",
+    "color": "#ffd95e"
+  },
+  {
     "name": "Cores!",
     "category": "Puzzle",
     "url": "https://wgrmoreira.github.io/Cores/",
