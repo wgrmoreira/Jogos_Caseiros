@@ -37,3 +37,5 @@ Atualização v4: Cores! incluído em Puzzle, com capa vetorial original de padr
 
 Atualização v5: Energia adicionado à categoria Puzzle, com capa original. Total: 13 jogos, sendo 8 puzzles.
 
+
+Atualização v6: Iron Front incluído em Ação e no destaque principal, com capa original. Catálogo: 14 jogos; Ação 3, Puzzle 8, RPG 1 e Esporte 2.

@@ -1,5 +1,12 @@
 const games = [
   {
+    "name": "Iron Front",
+    "category": "Ação",
+    "url": "https://wgrmoreira.github.io/Iron_Front/",
+    "cover": "assets/covers/13.svg",
+    "color": "#f6b563"
+  },
+  {
     "name": "Energia",
     "category": "Puzzle",
     "url": "https://wgrmoreira.github.io/Energia/",
