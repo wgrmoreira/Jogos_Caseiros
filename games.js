@@ -1,5 +1,12 @@
 const games = [
   {
+    "name": "Impacto",
+    "category": "Arcade",
+    "url": "https://wgrmoreira.github.io/Sem_Freio/",
+    "cover": "assets/covers/14.svg",
+    "color": "#ff8860"
+  },
+  {
     "name": "Iron Front",
     "category": "Ação",
     "url": "https://wgrmoreira.github.io/Iron_Front/",
