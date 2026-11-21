@@ -41,3 +41,5 @@ Atualização v5: Energia adicionado à categoria Puzzle, com capa original. Tot
 Atualização v6: Iron Front incluído em Ação e no destaque principal, com capa original. Catálogo: 14 jogos; Ação 3, Puzzle 8, RPG 1 e Esporte 2.
 
 Atualização v7: Impacto adicionado à nova categoria Arcade, com capa original de batidas de carros. Total: 15 jogos e 5 categorias. Iron Front permanece no destaque principal.
+
+Versão 8: biblioteca remodelada com carrossel de capas, setas de navegação e lista lateral de nomes. Tanto a capa quanto o nome abrem o jogo em outra aba. Busca, categorias e ordenação atualizam o carrossel e a lista. No celular, a lista é recolhível e as capas podem ser deslizadas com o dedo. Iron Front continua no destaque principal.
